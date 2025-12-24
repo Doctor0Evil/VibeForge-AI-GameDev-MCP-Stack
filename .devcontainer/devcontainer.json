@@ -1,0 +1,30 @@
+{
+  "name": "Vibe Horror Starter",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.formatOnSave": true,
+        "files.exclude": {
+          "**/.git": true,
+          "**/.DS_Store": true
+        },
+        "godotTools.gdscriptLintOnSave": true
+      },
+      "extensions": [
+        "geequlim.godot-tools",
+        "ms-vscode.vscode-typescript-next",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "github.vscode-github-actions"
+      ]
+    }
+  },
+  "forwardPorts": [4173, 3000],
+  "remoteUser": "node"
+}

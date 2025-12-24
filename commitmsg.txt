@@ -1,0 +1,9 @@
+﻿feat(vibeforge): scaffold MCP+SanitySystem starter kit
+
+- mcp/servers.json: filesystem/git/github/assets/godot-introspect
+- devcontainer: Node20+GodotTools auto-setup
+- tools/server-assets.mjs: file-drop asset stub (stdin JSON protocol)
+- tools/server-godot-introspect.mjs: scene/script JSON inventory
+- godot/scripts/core/sanity_system.gd: autoload w/ signals/thresholds
+- godot/scenes/demo_sanity.tscn: UI demo exercising SanitySystem
+- .github/workflows/ci.yml: GDScript lint + asset folder checks

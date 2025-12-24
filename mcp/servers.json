@@ -1,0 +1,55 @@
+{
+  "$schema": "https://raw.githubusercontent.com/modelcontextprotocol/spec/main/schemas/servers.v1.json",
+  "servers": [
+    {
+      "name": "fs",
+      "label": "Filesystem",
+      "type": "filesystem",
+      "config": {
+        "root": ".",
+        "readOnly": false
+      }
+    },
+    {
+      "name": "git",
+      "label": "Git CLI",
+      "type": "command",
+      "config": {
+        "command": "git",
+        "args": ["status", "--porcelain=v2"],
+        "cwd": "."
+      }
+    },
+    {
+      "name": "github",
+      "label": "GitHub API",
+      "type": "http",
+      "config": {
+        "baseUrl": "https://api.github.com",
+        "headers": {
+          "Accept": "application/vnd.github+json"
+        }
+      }
+    },
+    {
+      "name": "assets",
+      "label": "Vibe Assets",
+      "type": "command",
+      "config": {
+        "command": "node",
+        "args": ["tools/server-assets.mjs"],
+        "cwd": "."
+      }
+    },
+    {
+      "name": "godot-introspect",
+      "label": "Godot Introspect",
+      "type": "command",
+      "config": {
+        "command": "node",
+        "args": ["tools/server-godot-introspect.mjs"],
+        "cwd": "."
+      }
+    }
+  ]
+}

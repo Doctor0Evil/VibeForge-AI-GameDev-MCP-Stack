@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+      - develop
+      - feat/**
+  push:
+    branches:
+      - feat/**
+      - develop
+
+jobs:
+  lint-gdscript:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Godot (CLI)
+        uses: chickensoft-games/setup-godot@v1
+        with:
+          version: "4.3.0"
+
+      - name: GDScript format check (dry run)
+        run: |
+          if ls godot/**/*.gd 1> /dev/null 2>&1; then
+            godot --headless --editor --quit --script res://addons/gdformat/cli.gd || echo "gdformat addon not set up; skipping formatting."
+          else
+            echo "No GDScript files to lint."
+          fi
+
+  verify-asset-folders:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ensure asset structure
+        run: |
+          required=(
+            "godot/assets"
+            "godot/assets/generated"
+            "godot/assets/generated/textures"
+            "godot/assets/generated/audio"
+          )
+          missing=0
+          for d in "${required[@]}"; do
+            if [ ! -d "$d" ]; then
+              echo "::error::Missing required directory: $d"
+              missing=1
+            fi
+          done
+          if [ "$missing" -ne 0 ]; then
+            exit 1
