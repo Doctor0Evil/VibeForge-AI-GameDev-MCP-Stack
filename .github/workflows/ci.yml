@@ -55,3 +55,30 @@ jobs:
           done
           if [ "$missing" -ne 0 ]; then
             exit 1
+          fi
+
+  validate-mcp-config:
+    runs-on: ubuntu-latest
+    name: Validate MCP servers.json
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Ajv (for schema validation)
+        run: npm install ajv
+
+      - name: Run structural MCP config validation
+        env:
+          NODE_ENV: ci
+        run: |
+          if [ -f "tools/validate-mcp.js" ]; then
+            node tools/validate-mcp.js
+          else
+            echo "tools/validate-mcp.js not found; skipping structural validation."
+            exit 1
+          fi

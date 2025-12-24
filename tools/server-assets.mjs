@@ -9,6 +9,12 @@ const __dirname = path.dirname(__filename);
 const ROOT = path.resolve(__dirname, "..");
 const ASSETS_ROOT = path.join(ROOT, "godot", "assets", "generated");
 
+// TODO: Consider exposing this utility via an HTTP JSON API (Express/Fastify) so external MCP
+// clients can call POST /generate { type: 'texture'|'audio', name: 'foo' } -> { ok, path }
+// For now, this script uses a simple stdin/stdout JSON-lines protocol to stay lightweight and
+// compatible with MCP-style command servers. An HTTP wrapper would be straightforward to add:
+//   const app = express(); app.post('/generate', (req, res) => { /* call handleGenerate */ });
+
 const DIRS = [
   path.join(ASSETS_ROOT, "textures"),
   path.join(ASSETS_ROOT, "audio")
